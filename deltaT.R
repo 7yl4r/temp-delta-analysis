@@ -1,8 +1,8 @@
 library(dplyr)
 library(ggplot2)
 
-RESAMPLE_DELTA <- 1000
-
+RESAMPLE_DELTA <- 10
+YEARS <- c(0, 2100)
 # === ice core data
 # Load CSV
 data <- read.csv("data.tsv", sep='\t')
@@ -52,6 +52,14 @@ ggplot(resampled_data, aes(x = calendar_year, y = delta_temp)) +
   labs(title = "Differential of Temperature vs Time (Last 30,000 Years)",
        x = "Calendar Year (CE/BCE)",
        y = "Delta Temperature per RESAMPLE_DELTA") +
-  scale_x_continuous(limits = c(-30000, 2100), labels = scales::comma) +  # Show only the last 40,000 years
+  scale_x_continuous(limits = YEARS, labels = scales::comma) +  # Show only the last 40,000 years
   theme_minimal()
 
+# Plot delta_temp vs calendar_year
+ggplot(resampled_data, aes(x = calendar_year, y = Temperature)) +
+  geom_line() +
+  labs(title = "Differential of Temperature vs Time (Last 30,000 Years)",
+       x = "Calendar Year (CE/BCE)",
+       y = "Delta Temperature per RESAMPLE_DELTA") +
+  scale_x_continuous(limits = YEARS, labels = scales::comma) +  # Show only the last 40,000 years
+  theme_minimal()
